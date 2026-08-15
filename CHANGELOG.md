@@ -1,5 +1,11 @@
 # mattpocock-skills
 
+## 1.2.4
+
+### Patch Changes
+
+- [#848](https://github.com/mattpocock/skills/pull/848) [`f02e2ed`](https://github.com/mattpocock/skills/commit/f02e2ed3624d031272f8547742d23bf6bca8b072) Thanks [@mattpocock](https://github.com/mattpocock)! - domain-modeling: trigger on discussing codebase terminology and on writing or editing a CONTEXT.md or an ADR directly, replacing the narrower "pin down domain terminology or a ubiquitous language" / "record an architectural decision" phrasing. Also drops the "another skill needs to maintain the domain model" caveat — that's the invoking skill's job to state explicitly, not this description's.
+
 ## 1.2.3
 
 ### Patch Changes
