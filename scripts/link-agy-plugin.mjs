@@ -88,9 +88,8 @@ for (const skillMdPath of skillFiles) {
     fs.symlinkSync(srcEntryPath, destEntryPath);
   }
 
-  // Read and transform SKILL.md with namespacing
+  // Read and transform SKILL.md for AGY plugin (Antigravity automatically prefixes plugin name)
   const content = fs.readFileSync(skillMdPath, 'utf-8');
-  const namespacedName = `matt:${skillName}`;
   let transformed = content;
 
   if (transformed.startsWith('---')) {
@@ -100,9 +99,9 @@ for (const skillMdPath of skillFiles) {
       const rest = transformed.slice(endIdx);
 
       if (/^name:\s*.+$/m.test(frontmatter)) {
-        frontmatter = frontmatter.replace(/^name:\s*.+$/m, `name: "${namespacedName}"`);
+        frontmatter = frontmatter.replace(/^name:\s*.+$/m, `name: "${skillName}"`);
       } else {
-        frontmatter = `\nname: "${namespacedName}"` + frontmatter;
+        frontmatter = `\nname: "${skillName}"` + frontmatter;
       }
 
       // If description exists and doesn't mention /matt:skillName, add invoke guidance
@@ -115,13 +114,13 @@ for (const skillMdPath of skillFiles) {
       transformed = `---${frontmatter}${rest}`;
     }
   } else {
-    transformed = `---\nname: "${namespacedName}"\ndescription: >-\n  Matt Pocock's ${skillName} skill. Use when the user invokes /matt:${skillName}.\n---\n\n${transformed}`;
+    transformed = `---\nname: "${skillName}"\ndescription: >-\n  Matt Pocock's ${skillName} skill. Use when the user invokes /matt:${skillName}.\n---\n\n${transformed}`;
   }
 
   const destSkillMd = path.join(destSkillDir, 'SKILL.md');
   fs.writeFileSync(destSkillMd, transformed, 'utf-8');
   skillPathsForManifest.push(`skills/${skillName}`);
-  console.log(`  ✓ Linked & namespaced: ${namespacedName} (from ${path.relative(REPO, skillSrcDir)})`);
+  console.log(`  ✓ Linked: matt:${skillName} (from ${path.relative(REPO, skillSrcDir)})`);
 }
 
 // 3. Remove stale skills in target directory
